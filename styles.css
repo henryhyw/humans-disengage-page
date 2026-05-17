@@ -162,7 +162,7 @@ section.dark .prose { color: #c8c0aa; }
 
 /* ===================== hero ===================== */
 .hero {
-  padding: 112px 0 72px;
+  padding: 168px 0 72px;
   min-height: 82vh;
   display: flex;
   flex-direction: column;
