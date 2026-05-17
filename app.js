@@ -1650,8 +1650,49 @@ function initReplayButtons() {
       if (mod && typeof mod._animateIn === "function") mod._animateIn();
     });
   };
-  bindReplay("#phase-replay", PhasePlot);
-  bindReplay("#gap-replay",   PerAgentGap);
+  bindReplay("#gap-replay", PerAgentGap);
+}
+
+/* ------------------------------------------------------------------
+   Auto-play wiring: kick off animations when sections enter viewport.
+   - Phase stage: cycle through steps 1 → 2 → 3 with pacing.
+   - Paradigm chart: replay bar entry animation.
+   ------------------------------------------------------------------ */
+function initAutoPlay() {
+  if (!("IntersectionObserver" in window)) return;
+
+  // Phase plot autoplay
+  const phaseStage = $("#phase-stage");
+  if (phaseStage) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          obs.unobserve(e.target);
+          // Step 1 is already showing (set at init). Pace 2 and 3.
+          PhasePlot.setStep(1, false);
+          setTimeout(() => PhasePlot.setStep(2, false), 1800);
+          setTimeout(() => PhasePlot.setStep(3, false), 4400);
+        }
+      });
+    }, { threshold: 0.35 });
+    obs.observe(phaseStage);
+  }
+
+  // Paradigm chart animate-on-visible
+  const paradigmStage = $("#paradigm-stage");
+  if (paradigmStage) {
+    const obs2 = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          obs2.unobserve(e.target);
+          if (typeof ParadigmChart._animateIn === "function") {
+            ParadigmChart._animateIn();
+          }
+        }
+      });
+    }, { threshold: 0.25 });
+    obs2.observe(paradigmStage);
+  }
 }
 
 /* ------------------------------------------------------------------
@@ -1664,6 +1705,7 @@ let _progInited = false;
 let _countInited = false;
 let _traceInited = false;
 let _hoverInited = false;
+let _autoplayInited = false;
 function boot() {
   if (typeof d3 === "undefined") {
     console.error("[boot] D3 not loaded; skipping chart init.");
@@ -1697,8 +1739,9 @@ function boot() {
   safe("Truncation",  () => Truncation.init());
 
   // Replay buttons depend on modules being initialised
-  if (!_replayInited) { safe("Replay",  () => initReplayButtons()); _replayInited = true; }
-  if (!_hoverInited)  { safe("HoverLink", () => HoverLink.init()); _hoverInited = true; }
+  if (!_replayInited)   { safe("Replay",   () => initReplayButtons()); _replayInited   = true; }
+  if (!_hoverInited)    { safe("HoverLink", () => HoverLink.init());   _hoverInited    = true; }
+  if (!_autoplayInited) { safe("AutoPlay", () => initAutoPlay());      _autoplayInited = true; }
 }
 
 if (document.readyState === "loading") {
