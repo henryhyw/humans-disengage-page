@@ -162,15 +162,16 @@ section.dark .prose { color: #c8c0aa; }
 
 /* ===================== hero ===================== */
 .hero {
-  padding: 140px 0 88px;
-  min-height: 78vh;
+  padding: 112px 0 72px;
+  min-height: 82vh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;   /* anchor content near the top */
   background:
     radial-gradient(1200px 600px at 20% -10%, #f4ede0 0%, transparent 60%),
     var(--bg-warm);
 }
-.hero .inner { width: 100%; }
+.hero .inner-wide { width: 100%; }
 .hero-tag {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -409,6 +410,61 @@ section.dark .prose { color: #c8c0aa; }
   gap: 24px;
 }
 
+/* ===================== usecase cards ===================== */
+.usecase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 36px 0 0 0;
+}
+.usecase-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+.usecase-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-strong);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+.usecase-tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.usecase-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text);
+}
+.usecase-body {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-soft);
+  flex: 1;
+}
+.usecase-body strong { color: var(--text); font-weight: 600; }
+.usecase-body em     { font-style: italic; color: var(--text); }
+.usecase-foot {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-mute);
+  letter-spacing: 0.02em;
+}
+.usecase-foot em { color: var(--accent); font-style: italic; }
+
 /* ===================== cite section ===================== */
 .bibtex-wrap { position: relative; margin: 24px 0; }
 .bibtex {
@@ -627,6 +683,32 @@ svg { width: 100%; height: auto; display: block; }
 .reveal.delay-2 { transition-delay: 240ms; }
 .reveal.delay-3 { transition-delay: 360ms; }
 
+/* ===================== data-citation underline + tooltip ===================== */
+.data-cite {
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+  transition: background 140ms ease;
+  padding: 0 1px;
+}
+.data-cite:hover { background: rgba(204, 120, 92, 0.10); }
+.data-cite-tip {
+  position: absolute;
+  pointer-events: none;
+  max-width: 320px;
+  background: var(--bg-dark);
+  color: var(--text-inverse);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.55;
+  z-index: 95;
+  opacity: 0;
+  transition: opacity 140ms ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.20);
+}
+.data-cite-tip.show { opacity: 1; }
+
 /* ===================== tooltip ===================== */
 .tooltip-card {
   position: fixed;
@@ -680,6 +762,7 @@ svg { width: 100%; height: auto; display: block; }
   .stage { padding: 16px 18px; border-radius: 10px; }
   .bibtex { font-size: 12px; padding: 16px 18px; }
   .trace-grid { grid-template-columns: 1fr; }
+  .usecase-grid { grid-template-columns: 1fr; gap: 14px; }
   .phase-step-toggle { width: 100%; overflow-x: auto; }
   .phase-step-toggle .btn-mini { font-size: 11px; padding: 5px 8px; }
   .trunc-readout { font-size: 11.5px; }

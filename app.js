@@ -1579,6 +1579,136 @@ const Counters = {
 };
 
 /* ------------------------------------------------------------------
+   DATA CITATIONS — dotted-underline on key numbers in prose;
+   hover shows the paper source + analytical spec.
+   ------------------------------------------------------------------ */
+const DataCite = (function () {
+  let tip = null;
+
+  // [regex, provenance text]. Plain-text matches only — patterns must match
+  // text as it appears in a single text node AFTER browser HTML parsing
+  // (so <sub>, <em>, <sup> all split the text and we can't span them).
+  // Order matters — earliest match in the node wins.
+  const CITES = [
+    [/=\s*[−\-]0\.66\b/g,
+      "Item-FE interaction coefficient (LRM × correct) on log deliberation. Mixed-effects model: lmer(log_t ~ correct × is_LRM + (1|Item_ID)) on H-ARC, n = 11,224 trials. Paper Table 2."],
+    [/=\s*\+1\.47\s*to\s*\+3\.13/g,
+      "Within-agent d on log thinking-tokens, wrong − right. Range across 4 well-powered thinking LRMs (DeepSeek-R1, GLM-4.5-Air, gpt-oss-120b, QwQ-32B). Paper Table 1."],
+    [/=\s*\+0\.95\s*to\s*\+3\.13/g,
+      "Per-agent within-agent Cohen's d range across 5 thinking LRMs on H-ARC (including underpowered gpt-oss-20b). Paper Table 1."],
+    [/=\s*[−\-]0\.45\s*log\s*units/g,
+      "Within-item correctness slope on human log RT, H-ARC matched cell. Mixed-effects with item random effects, 80 humans × 400 items. Paper Figure 1."],
+    [/=\s*[−\-]0\.10\b/g,
+      "Matched-human Cohen's d on log RT for the 80-participant H-ARC training set, item-controlled. Paper §3.2."],
+    [/=\s*\+3\.13\b/g,
+      "Qwen-QwQ-32B within-agent Cohen's d on log thinking-tokens. Largest per-agent gap in the H-ARC sample. Paper Table 1."],
+    [/\[\s*[−\-]0\.81\s*,\s*[−\-]0\.50\s*\]/g,
+      "Cluster-robust 95% CI for β_LRM under item-clustered SE. Paper Table 2."],
+    [/4\s*[×x]\s*10/g,
+      "Two-sided p from item-clustered Wald test on β_LRM. Full value: p = 4×10⁻¹⁷. Paper Table 2."],
+    [/\bp\s*<\s*\.001\b/g,
+      "Length-controlled trace-content coefficient. Cluster-robust SE on Item_ID. Paper Table 4."],
+    [/\b11,?224\b/g,
+      "Trial count: 80 matched humans × 400 H-ARC items, dropping NaN RTs. Paper Methods §2.3."],
+    [/\b400\s*H-ARC\s*items\b/g,
+      "H-ARC training-set items used for the matched-cell analysis. Paper Methods §2.1."],
+    [/\b10,?000-?resample\s*bootstrap/gi,
+      "Per-agent Cortes Cohen's d bootstrap CI. 10,000 resamples with replacement on wrong-trial pool. Paper §4.3."],
+    [/\b12,?554\s*tokens\b/g,
+      "Real Qwen-QwQ-32B reasoning_token_length for the wrong-trial trace (item b0722778). Paper §5 trace excerpts."],
+    [/\b797\s*tokens\b/g,
+      "Real Qwen-QwQ-32B reasoning_token_length for the right-trial trace (item 00576224). Paper §5 trace excerpts."],
+    [/\bhedge\s*density\b/gi,
+      "Hedge count per 1k characters in the reasoning trace. Vocabulary: 'wait', 'hmm', 'actually', 'maybe', etc. Paper Methods §2.5."],
+    [/\b5-?gram\s*repetition\s*rate\b/gi,
+      "1 − (unique 5-grams ÷ total 5-grams) in the reasoning trace. Paper Methods §2.5."],
+    [/\btype.token\s*ratio\b/gi,
+      "Number of unique words ÷ total words in the reasoning trace. Paper Methods §2.5."],
+  ];
+
+  function ensureTip() {
+    if (tip) return tip;
+    tip = document.createElement("div");
+    tip.className = "data-cite-tip";
+    document.body.appendChild(tip);
+    return tip;
+  }
+
+  function annotate(rootSel) {
+    document.querySelectorAll(rootSel).forEach((node) => {
+      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null);
+      const textNodes = [];
+      let cur;
+      while ((cur = walker.nextNode())) {
+        // skip if inside a code/mono block, already-annotated span, or BibTeX
+        if (cur.parentElement.closest(".data-cite, .mono, pre, code, .bibtex, .formula")) continue;
+        textNodes.push(cur);
+      }
+      textNodes.forEach((tn) => annotateNode(tn));
+    });
+  }
+
+  function annotateNode(textNode) {
+    const text = textNode.nodeValue;
+    let earliest = null;
+    let provenance = null;
+    let matchedText = null;
+    for (const [pat, prov] of CITES) {
+      pat.lastIndex = 0;
+      const m = pat.exec(text);
+      if (m && (earliest === null || m.index < earliest)) {
+        earliest = m.index;
+        provenance = prov;
+        matchedText = m[0];
+      }
+    }
+    if (earliest === null) return;
+    const before = text.slice(0, earliest);
+    const after  = text.slice(earliest + matchedText.length);
+    const parent = textNode.parentNode;
+    if (before) parent.insertBefore(document.createTextNode(before), textNode);
+    const span = document.createElement("span");
+    span.className = "data-cite";
+    span.textContent = matchedText;
+    span.dataset.cite = provenance;
+    span.addEventListener("mouseenter", (e) => showCiteTip(e, provenance));
+    span.addEventListener("mousemove", moveCiteTip);
+    span.addEventListener("mouseleave", hideCiteTip);
+    parent.insertBefore(span, textNode);
+    const afterNode = document.createTextNode(after);
+    parent.insertBefore(afterNode, textNode);
+    parent.removeChild(textNode);
+    if (after) annotateNode(afterNode);
+  }
+
+  function showCiteTip(e, prov) {
+    const t = ensureTip();
+    t.textContent = prov;
+    t.classList.add("show");
+    moveCiteTip(e);
+  }
+  function moveCiteTip(e) {
+    if (!tip) return;
+    const off = 14;
+    let x = e.pageX + off;
+    let y = e.pageY - tip.offsetHeight - off;
+    if (y < window.scrollY + 8) y = e.pageY + off;
+    if (x + tip.offsetWidth > window.innerWidth + window.scrollX - 8) {
+      x = e.pageX - tip.offsetWidth - off;
+    }
+    tip.style.left = x + "px";
+    tip.style.top  = y + "px";
+  }
+  function hideCiteTip() { if (tip) tip.classList.remove("show"); }
+
+  function init() {
+    // Target prose + headline values + takeaways + use-case feet
+    annotate(".prose, .takeaway, .headline-value, .headline-foot, .usecase-body, .usecase-foot, .stage-foot");
+  }
+  return { init };
+})();
+
+/* ------------------------------------------------------------------
    Reading progress bar
    ------------------------------------------------------------------ */
 const ProgressBar = {
@@ -1706,6 +1836,7 @@ let _countInited = false;
 let _traceInited = false;
 let _hoverInited = false;
 let _autoplayInited = false;
+let _citeInited = false;
 function boot() {
   if (typeof d3 === "undefined") {
     console.error("[boot] D3 not loaded; skipping chart init.");
@@ -1742,6 +1873,8 @@ function boot() {
   if (!_replayInited)   { safe("Replay",   () => initReplayButtons()); _replayInited   = true; }
   if (!_hoverInited)    { safe("HoverLink", () => HoverLink.init());   _hoverInited    = true; }
   if (!_autoplayInited) { safe("AutoPlay", () => initAutoPlay());      _autoplayInited = true; }
+  // DataCite must run after all DOM is rendered; safe to run once.
+  if (!_citeInited)     { safe("DataCite", () => DataCite.init());     _citeInited     = true; }
 }
 
 if (document.readyState === "loading") {

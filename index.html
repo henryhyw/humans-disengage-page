@@ -30,6 +30,7 @@
       <a href="#trace-explorer">Trace</a>
       <a href="#cortes-ci">CIs</a>
       <a href="#meaning">Truncation</a>
+      <a href="#usecases">Who for</a>
       <a href="#cite">Cite</a>
     </div>
     <button class="nav-burger" id="nav-burger" aria-label="Toggle navigation" aria-expanded="false">
@@ -41,7 +42,7 @@
 <a id="top"></a>
 <!-- ============================ HERO ============================ -->
 <header class="hero">
-  <div class="inner">
+  <div class="inner-wide">
     <div class="hero-tag">Submitted · Computational Brain &amp; Behavior</div>
     <h1 class="hero-title">Humans disengage,<br/>reasoning models <em>persist</em>.</h1>
     <p class="hero-sub">Thinking LRMs spend more tokens on the items they get wrong. Humans spend less time on the items they get wrong. On the very same problems.</p>
@@ -285,19 +286,61 @@
   </div>
 </section>
 
-<!-- ============================ 10 · Cite ============================ -->
+<!-- ============================ 10 · Who this is for ============================ -->
+<section id="usecases">
+  <div class="inner-wide">
+    <div class="section-eyebrow reveal">10 &nbsp;·&nbsp; Who this is for</div>
+    <h2 class="section-title reveal delay-1">Three readers get <em>three different things</em>.</h2>
+    <div class="prose reveal delay-2">
+      <p>The same dissociation tells a different story depending on what you're trying to build, measure, or claim. Three concrete handoffs to readers from adjacent fields:</p>
+    </div>
+    <div class="usecase-grid reveal delay-3">
+      <div class="usecase-card">
+        <div class="usecase-tag">Eval &amp; benchmark builders</div>
+        <div class="usecase-title">Truncation as a diagnostic instrument.</div>
+        <div class="usecase-body">
+          The proposed truncation manipulation discriminates a length-on-uncertainty policy from a useful-search policy on the same dataset, no human comparison required. Add it to a reasoning-eval suite that already varies thinking budget &mdash; the curve shape between <span class="mono">f ≈ 0.5</span> and <span class="mono">f ≈ 0.8</span> is what carries the signal.
+        </div>
+        <div class="usecase-foot">
+          headline: 4 / 4 well-powered thinking LRMs in <em>d</em> &ge; +1.47
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-tag">Cog-sci &amp; CHCI</div>
+        <div class="usecase-title">Re-read "LRMs deliberate like humans".</div>
+        <div class="usecase-body">
+          Cross-item alignment between LRM trace length and human RT does not license a shared-deliberation reading. Once items are held fixed, the allocation policies move in opposite directions. Cross-paradigm: agent-type contrast survives; LRM-side mechanism does not always survive.
+        </div>
+        <div class="usecase-foot">
+          item-FE interaction: <span class="mono">β<sub>LRM</sub> = &minus;0.66</span>, <em>p</em> = 4&times;10<sup>&minus;17</sup>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-tag">Mech interp &amp; trace analysis</div>
+        <div class="usecase-title">Length-controlled trace features as a behavioural probe.</div>
+        <div class="usecase-body">
+          Hedge density, 5-gram repetition rate, and type&ndash;token ratio &mdash; all controlled for trace length &mdash; sit reliably on wrong trials in QwQ-32B. Cheap, parser-free signals for "this trial went into rumination, not search," replicable on any open-weight LRM whose trace you can read.
+        </div>
+        <div class="usecase-foot">
+          all three β coefficients <em>p</em> &lt; .001 (length-controlled)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 11 · Cite ============================ -->
 <section id="cite">
   <div class="inner">
-    <div class="section-eyebrow reveal">10 &nbsp;·&nbsp; Cite</div>
+    <div class="section-eyebrow reveal">11 &nbsp;·&nbsp; Cite</div>
     <h2 class="section-title reveal delay-1">BibTeX</h2>
     <div class="bibtex-wrap reveal delay-2">
-      <pre class="bibtex" id="bib-text"><code>@article{wang2026deliberation,
-  author  = {Wang, Han-yu},
-  title   = {Humans Disengage, Reasoning Models Persist:
-             An Item-Controlled Dissociation in Deliberation Allocation},
-  journal = {Computational Brain &amp; Behavior},
-  year    = {2026},
-  note    = {Under review}
+      <pre class="bibtex" id="bib-text"><code>@unpublished{wang2026deliberation,
+  author = {Wang, Han-yu},
+  title  = {Humans Disengage, Reasoning Models Persist:
+            An Item-Controlled Dissociation in Deliberation Allocation},
+  year   = {2026},
+  note   = {Manuscript under review at Computational Brain \&amp; Behavior}
 }</code></pre>
       <button class="btn-mini bib-copy" id="bib-copy">Copy</button>
     </div>
