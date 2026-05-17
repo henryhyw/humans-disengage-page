@@ -1,0 +1,5 @@
+.DS_Store
+_screens/
+_screens_mobile/
+_screenshot*.py
+extract_data.py

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Humans Disengage, Reasoning Models Persist</title>
+  <meta name="description" content="An item-controlled dissociation in deliberation allocation between humans and thinking large reasoning models." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============================ READING PROGRESS ============================ -->
+<div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+
+<!-- ============================ TOP NAV ============================ -->
+<nav class="topnav" id="topnav" aria-label="Section navigation">
+  <div class="topnav-inner">
+    <a class="brand" href="#top">
+      humans disengage, models <span class="brand-em">persist</span>
+    </a>
+    <div class="navlinks">
+      <a href="#setup">Puzzle</a>
+      <a href="#headline">Finding</a>
+      <a href="#phase">Phase</a>
+      <a href="#paradigms">Per-agent</a>
+      <a href="#mechanism">Mechanism</a>
+      <a href="#trace-explorer">Trace</a>
+      <a href="#cortes-ci">CIs</a>
+      <a href="#meaning">Truncation</a>
+      <a href="#cite">Cite</a>
+    </div>
+    <button class="nav-burger" id="nav-burger" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<a id="top"></a>
+<!-- ============================ HERO ============================ -->
+<header class="hero">
+  <div class="inner">
+    <div class="hero-tag">Submitted · Computational Brain &amp; Behavior</div>
+    <h1 class="hero-title">Humans disengage,<br/>reasoning models <em>persist</em>.</h1>
+    <p class="hero-sub">Thinking LRMs spend more tokens on the items they get wrong. Humans spend less time on the items they get wrong. On the very same problems.</p>
+    <div class="hero-author">
+      Han-yu Wang · The University of Hong Kong ·
+      <a href="https://orcid.org/0009-0003-0252-8423" target="_blank" rel="noopener">ORCID</a>
+    </div>
+    <div class="hero-cta">
+      <a class="btn-primary" href="paper_cbb.pdf" target="_blank" rel="noopener">Read the paper</a>
+      <a class="btn-secondary" href="supplementary_cbb.pdf" target="_blank" rel="noopener">Supplementary</a>
+      <a class="btn-secondary" href="https://osf.io/jxb4a/?view_only=b20c133f0c9b404c8baa7474fc8d712f" target="_blank" rel="noopener">OSF code &amp; data</a>
+      <a class="btn-secondary" href="#cite">BibTeX</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ 01 · The puzzle ============================ -->
+<section id="setup">
+  <div class="inner">
+    <div class="section-eyebrow reveal">01 &nbsp;·&nbsp; The puzzle</div>
+    <h2 class="section-title reveal delay-1">A surface similarity. <em>What lies beneath?</em></h2>
+    <div class="prose prose-large reveal delay-2">
+      <p>Thinking large reasoning models (LRMs) take longer on harder problems. So do humans. de Varda and colleagues (2025) recently reported this cross-item alignment in matched human–LRM data and read it as evidence of shared deliberation.</p>
+      <p>But cross-item alignment is one thing. What happens on a <em>single</em> item — when a particular agent attempts a particular problem? Does the agent that registers an item as hard then spend the right amount of thought on it?</p>
+    </div>
+    <p class="takeaway reveal delay-3">
+      The same item-level data conceals an opposite within-item pattern: humans and LRMs do not allocate deliberation the same way.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ 02 · The diagnostic ============================ -->
+<section id="diagnostic">
+  <div class="inner">
+    <div class="section-eyebrow reveal">02 &nbsp;·&nbsp; The diagnostic</div>
+    <h2 class="section-title reveal delay-1">Two levels: <em>registration</em> and <em>allocation</em>.</h2>
+    <div class="prose reveal delay-2">
+      <p>The paper separates two behavioral questions that previous work conflates:</p>
+      <ul class="diag-list">
+        <li><strong>Registration</strong> &mdash; <em>does deliberation length track which items are hard?</em> Measured as a cross-item Spearman <span class="mono">ρ</span> between an agent's deliberation length and the human-RT proxy for difficulty.</li>
+        <li><strong>Allocation</strong> &mdash; <em>given an item, where does the agent spend more thought?</em> Measured as a within-agent, outcome-conditioned, item-controlled contrast: Cohen's <span class="mono">d</span> on log deliberation, wrong &minus; right.</li>
+      </ul>
+      <p>Registration aligns with task difficulty. Allocation reveals what control policy the agent is running under. Cross-item alignment alone cannot tell them apart.</p>
+    </div>
+    <p class="takeaway reveal delay-3">
+      Two diagnostics. Same data. They come apart on H-ARC.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ 03 · The headline ============================ -->
+<section id="headline" class="dark">
+  <div class="inner">
+    <div class="section-eyebrow reveal">03 &nbsp;·&nbsp; The headline finding</div>
+    <h2 class="section-title reveal delay-1">A sign reversal, holding items fixed.</h2>
+    <div class="headline-grid reveal delay-2">
+      <div class="headline-card">
+        <div class="headline-label">LRM allocation (well-powered)</div>
+        <div class="headline-value pos">Cohen's <em>d</em> = +1.47 to +3.13</div>
+        <div class="headline-foot">All 4 well-powered thinking LRMs spend longer on wrong trials than on right ones</div>
+      </div>
+      <div class="headline-card">
+        <div class="headline-label">Human allocation (item-fixed)</div>
+        <div class="headline-value neg">Slope = &minus;0.45 log units</div>
+        <div class="headline-foot">Same items, opposite direction: less time on the trials they get wrong</div>
+      </div>
+      <div class="headline-card">
+        <div class="headline-label">Interaction (item fixed effects)</div>
+        <div class="headline-value">β<sub>LRM</sub> = &minus;0.66</div>
+        <div class="headline-foot">95% CI [&minus;0.81, &minus;0.50], <em>p</em> = 4&times;10<sup>&minus;17</sup></div>
+      </div>
+    </div>
+    <p class="takeaway reveal delay-3">
+      Holding the item exactly fixed, humans and LRMs do not move in the same direction. Cross-item alignment masked an opposite within-item allocation policy.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ 04 · Phase plot ============================ -->
+<section id="phase">
+  <div class="inner-wide">
+    <div class="section-eyebrow reveal">04 &nbsp;·&nbsp; Registration ≠ allocation</div>
+    <h2 class="section-title reveal delay-1">All thinking LRMs land in the <em>same</em> quadrant.</h2>
+    <div class="prose reveal delay-2">
+      <p>Plot the two diagnostics against each other: cross-item registration ρ on the x-axis, within-agent allocation <span class="mono">d</span> on the y-axis. Every thinking LRM lands in the upper-right (positive on both). The matched human sample sits on the bottom edge. The non-thinking baseline (DeepSeek-V3) anchors the lower-left.</p>
+    </div>
+    <div class="stage reveal delay-3" id="phase-stage">
+      <div class="stage-controls">
+        <span class="label">6 thinking LRMs · 1 non-thinking baseline · human reference</span>
+        <span style="flex:1"></span>
+        <div class="phase-step-toggle" id="phase-step-toggle">
+          <button class="btn-mini active" data-step="1">1 · Registration only</button>
+          <button class="btn-mini" data-step="2">2 · Add allocation</button>
+          <button class="btn-mini" data-step="3">3 · Reveal quadrant</button>
+        </div>
+        <button class="btn-mini" id="phase-replay">↺&nbsp; Replay</button>
+      </div>
+      <div id="phase-chart"></div>
+      <p class="stage-foot" id="phase-foot">
+        <strong>Step 1 of 3 ·</strong> Each model's <em>cross-item ρ</em> with human RT — looks aligned: most thinking LRMs are positively correlated with humans across items.
+      </p>
+    </div>
+    <p class="takeaway reveal">
+      Registration position does not predict allocation position. The two diagnostics measure different things.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ 05 · Per-agent gap across paradigms ============================ -->
+<section id="paradigms">
+  <div class="inner-wide">
+    <div class="section-eyebrow reveal">05 &nbsp;·&nbsp; Per-agent allocation gap · generalisation &amp; boundary</div>
+    <h2 class="section-title reveal delay-1">Every analysed LRM lands on the <em>same side</em> &mdash; on every paradigm.</h2>
+    <div class="prose reveal delay-2">
+      <p>Per-agent Cohen's <span class="mono">d</span> on log deliberation, wrong &minus; right. Each agent is its own within-agent baseline; seconds and reasoning tokens are not compared directly. <strong>H-ARC</strong> is the primary paradigm: 5 thinking LRMs at <em>d</em> = +0.95 to +3.13, the matched human cell at <em>d</em> = &minus;0.10. Toggle to <strong>INTUIT</strong> (cross-paradigm replication) and <strong>Cortes</strong> (the boundary case where the LRM-only within-item slope reverses sign).</p>
+    </div>
+    <div class="stage reveal delay-3" id="paradigm-stage">
+      <div class="stage-controls">
+        <span class="label">cross-paradigm allocation</span>
+        <div class="toggle-grp" id="paradigm-toggle">
+          <button class="btn-mini active" data-paradigm="H-ARC">H-ARC</button>
+          <button class="btn-mini" data-paradigm="INTUIT">INTUIT</button>
+          <button class="btn-mini" data-paradigm="Cortes">Cortes</button>
+          <button class="btn-mini" data-paradigm="ALL">All side-by-side</button>
+        </div>
+        <span class="muted">solid = well-powered · paler = underpowered (parser-limited or low-n)</span>
+      </div>
+      <div id="paradigm-chart"></div>
+      <p class="stage-foot" id="paradigm-foot"></p>
+    </div>
+    <p class="takeaway reveal">
+      Five LRMs at <em>d</em> = +0.95 to +3.13 on H-ARC; the agent-type contrast survives on INTUIT and Cortes. The LRM-side mechanism (length grows with uncertainty) is paradigm-dependent.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ 07 · Mechanism probes ============================ -->
+<section id="mechanism">
+  <div class="inner-wide">
+    <div class="section-eyebrow reveal">06 &nbsp;·&nbsp; What might be producing each side</div>
+    <h2 class="section-title reveal delay-1">Two convergent <em>behavioural probes</em>.</h2>
+    <div class="prose reveal delay-2">
+      <p>Mechanism interpretations of behavioural signatures, not direct evidence of internal architecture. <strong>Left:</strong> on H-ARC humans, controlling for the per-trial grid-action count cuts the within-item correctness slope nearly in half &mdash; consistent with engagement-vs-abandonment. <strong>Right:</strong> length-controlled LRM trace-content features (hedging, repetition, type–token ratio) sit reliably on wrong trials &mdash; consistent with length-on-uncertainty.</p>
+    </div>
+    <div class="mech-grid reveal delay-3">
+      <div class="stage" id="mech-a-stage">
+        <div class="stage-controls">
+          <span class="label">6a · Human engagement decomposition</span>
+        </div>
+        <div id="mech-a-chart"></div>
+        <p class="stage-foot">Controlling for per-trial actions removes <strong id="med-pct">48%</strong> of the within-item correctness slope on human log RT.</p>
+      </div>
+      <div class="stage" id="mech-b-stage">
+        <div class="stage-controls">
+          <span class="label">6b · LRM trace-content asymmetries</span>
+        </div>
+        <div id="mech-b-chart"></div>
+        <p class="stage-foot">Negative β on hedging / repetition means the feature is <em>higher</em> on wrong trials, controlling for trace length.</p>
+      </div>
+    </div>
+    <p class="takeaway reveal">
+      The behavioural signatures suggest different control policies: human time is partly gated by engagement, LRM length tracks uncertainty-like trace features.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ 07 · Trace explorer ============================ -->
+<section id="trace-explorer">
+  <div class="inner-wide">
+    <div class="section-eyebrow reveal">07 &nbsp;·&nbsp; See it in the trace</div>
+    <h2 class="section-title reveal delay-1">What "length-on-uncertainty" <em>actually looks like</em>.</h2>
+    <div class="prose reveal delay-2">
+      <p>Two real QwQ-32B reasoning traces on H-ARC. Same model, same task, two different items. On the left, a trial it got right: ~800 tokens, decisive language. On the right, a trial it got wrong: ~12,500 tokens of cycling "Hmm. Wait maybe…" — the same hedging and 5-gram repetition features that section 6b's β coefficients pick up.</p>
+    </div>
+    <div class="stage reveal delay-3" id="trace-stage">
+      <div class="stage-controls">
+        <span class="label">Qwen-QwQ-32B · H-ARC</span>
+        <span class="muted">hover the highlighted tokens to see what they're tagged as</span>
+      </div>
+      <div class="trace-grid" id="trace-grid">
+        <!-- populated by app.js -->
+      </div>
+    </div>
+    <p class="takeaway reveal">
+      The wrong-trial trace is not <em>more careful</em> reasoning. It's the same shallow guess cycled through a dozen variations.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ 08 · Cortes CIs ============================ -->
+<section id="cortes-ci">
+  <div class="inner-wide">
+    <div class="section-eyebrow reveal">08 &nbsp;·&nbsp; Robustness &mdash; Cortes bootstrap uncertainty</div>
+    <h2 class="section-title reveal delay-1">Small <em>n</em>, but the LRM bars don't touch zero.</h2>
+    <div class="prose reveal delay-2">
+      <p>Cortes per-LRM wrong-trial counts are 5–8 per model. Bootstrap 95% CIs (10,000 resamples) on the within-agent <span class="mono">d</span> are wide &mdash; but every thinking LRM CI excludes zero. The non-thinking V3 baseline does too.</p>
+    </div>
+    <div class="stage reveal delay-3" id="ci-stage">
+      <div class="stage-controls">
+        <span class="label">Cortes · 10,000-resample bootstrap CIs</span>
+      </div>
+      <div id="ci-chart"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 09 · What's next ============================ -->
+<section id="meaning">
+  <div class="inner-wide">
+    <div class="section-eyebrow reveal">09 &nbsp;·&nbsp; What's next</div>
+    <h2 class="section-title reveal delay-1">Truncation is the <em>discriminating</em> test.</h2>
+    <div class="prose prose-large reveal delay-2">
+      <p>Cross-item alignment between LRM trace length and human reaction time, the basis of recent claims of shared deliberation, conflates two mechanisms that pull apart at the within-item level. A controlled truncation manipulation &mdash; running LRMs at fixed thinking budgets and recovering accuracy under each budget &mdash; would discriminate a length-on-uncertainty policy from a useful-search interpretation.</p>
+    </div>
+    <div class="stage reveal delay-3" id="trunc-stage">
+      <div class="stage-controls">
+        <span class="label">truncation simulator · toy predictions</span>
+        <span class="muted">drag the slider to set thinking-budget fraction f</span>
+      </div>
+      <div id="trunc-chart"></div>
+      <div class="trunc-controls">
+        <input type="range" id="trunc-slider" min="0" max="100" step="1" value="100" class="trunc-slider" />
+        <div class="trunc-readout">
+          <span class="trunc-readout-label">f =</span>
+          <span class="trunc-readout-value mono" id="trunc-f">1.00</span>
+          <span class="trunc-readout-sep">·</span>
+          <span class="trunc-readout-label">accuracy under</span>
+          <span class="trunc-key trunc-key-uncer">length-on-uncertainty</span>:
+          <span class="mono" id="trunc-acc-uncer">—</span>
+          <span class="trunc-readout-sep">·</span>
+          <span class="trunc-key trunc-key-useful">useful-search</span>:
+          <span class="mono" id="trunc-acc-useful">—</span>
+        </div>
+      </div>
+      <p class="stage-foot">
+        Under <em>length-on-uncertainty</em>, the extra tokens were rumination — accuracy holds up under truncation. Under <em>useful-search</em>, each token bought information — accuracy degrades with f. The curves diverge most between <span class="mono">f ≈ 0.5</span> and <span class="mono">f ≈ 0.8</span>. Real LRM data falling on either curve discriminates the two policies.
+      </p>
+    </div>
+    <p class="takeaway reveal delay-3">
+      A single "deliberation" construct conflates two policies. Item-controlled, outcome-conditioned contrasts are how you tell them apart.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ 10 · Cite ============================ -->
+<section id="cite">
+  <div class="inner">
+    <div class="section-eyebrow reveal">10 &nbsp;·&nbsp; Cite</div>
+    <h2 class="section-title reveal delay-1">BibTeX</h2>
+    <div class="bibtex-wrap reveal delay-2">
+      <pre class="bibtex" id="bib-text"><code>@article{wang2026deliberation,
+  author  = {Wang, Han-yu},
+  title   = {Humans Disengage, Reasoning Models Persist:
+             An Item-Controlled Dissociation in Deliberation Allocation},
+  journal = {Computational Brain &amp; Behavior},
+  year    = {2026},
+  note    = {Under review}
+}</code></pre>
+      <button class="btn-mini bib-copy" id="bib-copy">Copy</button>
+    </div>
+    <div class="cite-foot reveal delay-3">
+      Code &amp; data: <a href="https://osf.io/jxb4a/?view_only=b20c133f0c9b404c8baa7474fc8d712f" target="_blank" rel="noopener">osf.io/jxb4a</a> &nbsp;·&nbsp;
+      Author: <a href="mailto:henry.why@connect.hku.hk">henry.why@connect.hku.hk</a> &nbsp;·&nbsp;
+      <a href="https://orcid.org/0009-0003-0252-8423" target="_blank" rel="noopener">ORCID</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="inner">
+    <p>© 2026 Han-yu Wang · The University of Hong Kong · <a href="paper_cbb.pdf" target="_blank">paper</a> · <a href="supplementary_cbb.pdf" target="_blank">SI</a></p>
+  </div>
+</footer>
+
+<!-- ============================ scripts ============================ -->
+<script src="d3.min.js"></script>
+<script>
+  if (typeof d3 === 'undefined') {
+    document.body.insertAdjacentHTML('afterbegin',
+      '<div style="position:fixed;top:0;left:0;right:0;background:#b95c44;color:white;padding:12px;text-align:center;font-family:monospace;z-index:9999;">' +
+      'D3 failed to load locally. Charts will not render.' +
+      '</div>');
+  }
+</script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
